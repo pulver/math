@@ -17,9 +17,13 @@ BOOST_AUTO_TEST_CASE_TEMPLATE(expm1_hpp, T, all_float_types) {
   for (auto i : boost::irange(test_constants::n_samples)) {
     std::ignore = i;
     auto x = x_sampler.next();
-    BOOST_CHECK_CLOSE(boost::math::expm1(make_fvar<T, m>(x)).derivative(0u),
-                      boost::math::expm1(x),
-                      50 * test_constants::pct_epsilon());
+    try {
+      BOOST_CHECK_CLOSE(boost::math::expm1(make_fvar<T, m>(x)).derivative(0u),
+                        boost::math::expm1(x),
+                        50 * test_constants::pct_epsilon());
+    } catch (...) {
+      std::cerr << "Inputs: x: " << x << std::endl;
+    }
   }
 }
 

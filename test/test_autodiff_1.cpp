@@ -234,12 +234,9 @@ BOOST_AUTO_TEST_CASE_TEMPLATE(multiplication_assignment, T, all_float_types) {
   // 0 * inf = nan
   x = make_fvar<T, m>(0.0);
   x *= std::numeric_limits<T>::infinity();
-  // std::cout << "x = " << x << std::endl;
   for (auto i : boost::irange(m + 1)) {
     if (i == 0) {
-      BOOST_CHECK(boost::math::isnan(static_cast<T>(x))); // Correct
-      // BOOST_CHECK_EQUAL(x.derivative(i) == 0.0); // Wrong. See
-      // multiply_assign_by_root_type().
+      BOOST_CHECK(boost::math::isnan(static_cast<T>(x)));
     } else if (i == 1) {
       BOOST_CHECK(boost::math::isinf(x.derivative(i)));
     } else {

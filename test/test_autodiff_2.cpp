@@ -11,7 +11,6 @@ BOOST_AUTO_TEST_CASE_TEMPLATE(one_over_one_plus_x_squared, T, all_float_types) {
   constexpr std::size_t m = 4;
   const T cx(1);
   auto f = make_fvar<T, m>(cx);
-  // f = 1 / ((f *= f) += 1);
   f *= f;
   f += T(1);
   f = f.inverse();
@@ -29,9 +28,6 @@ BOOST_AUTO_TEST_CASE_TEMPLATE(exp_test, T, all_float_types) {
   const auto x = make_fvar<T, m>(cx);
   auto y = exp(x);
   for (auto i : boost::irange(m + 1)) {
-    // std::cout.precision(100);
-    // std::cout << "y.derivative("<<i<<") = " << y.derivative(i) << ",
-    // std::exp(cx) = " << std::exp(cx) << std::endl;
     BOOST_CHECK_CLOSE_FRACTION(y.derivative(i), exp(cx),
                                std::numeric_limits<T>::epsilon());
   }
